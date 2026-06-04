@@ -730,24 +730,81 @@ footer .credit a {
    KODE TAMBAHAN BARU (UNTUK STYLING FITUR BARU TANPA MENGUBAH KODE DI ATAS)
    ========================================================================== */
 
-/* Perbaikan Masking Gambar Kopi di Bagian Tentang Kami */
+/* 1. INTERAKSI: Struktur Dark Mode / Light Mode Override */
+:root {
+  --light-bg: #f5f5f7;
+  --light-text: #1d1d1f;
+  --light-card: #ffffff;
+}
+
+body.light-theme {
+  background-color: var(--light-bg);
+  color: var(--light-text);
+}
+body.light-theme .navbar {
+  background-color: rgba(245, 245, 247, 0.8);
+  border-bottom-color: #d2d2d7;
+}
+body.light-theme .navbar .navbar-logo,
+body.light-theme .navbar .navbar-nav a,
+body.light-theme .navbar .navbar-extra a {
+  color: var(--light-text);
+}
+body.light-theme .about .row .content p,
+body.light-theme .menu p,
+body.light-theme .products p,
+body.light-theme .contact p {
+  color: #333;
+}
+body.light-theme .menu-card,
+body.light-theme .product-card,
+body.light-theme .testimonial-card,
+body.light-theme .feature-card {
+  background-color: var(--light-card);
+  color: var(--light-text);
+  border-color: #d2d2d7;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+body.light-theme .products .product-icons a {
+  color: var(--light-text);
+  border-color: #d2d2d7;
+}
+body.light-theme .contact .row {
+  background-color: #e5e5e7;
+}
+
+/* 2. ANIMASI: Hover Effect Optimization */
+.navbar .navbar-nav a:hover,
+.navbar .navbar-extra a:hover,
+.menu-card:hover,
+.product-card:hover {
+  transition: all 0.3s ease-in-out;
+}
+.menu-card:hover {
+  transform: translateY(-8px);
+}
+
+/* 3. ANIMASI: Parallax Effect Hero Section */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center center;
+}
+
+/* Fix Masking Image di About Section */
 .about .row .about-img img {
   -webkit-mask-size: 90% !important;
   mask-size: 90% !important;
   object-fit: cover;
 }
 
-/* Perbaikan Gambar Espresso */
-.menu .row .menu-card:nth-child(1) img {
-  content: url('https://images.unsplash.com/photo-1510972527409-cef1903972fa?q=80&w=500') !important;
-}
-
-/* 1. Styling Section Features */
+/* 4. ANIMASI: Section Features */
 .features {
   padding: 8rem 7% 1.4rem;
   background-color: #0b0b0b;
 }
-
+body.light-theme .features {
+  background-color: #e5e5e7;
+}
 .features .row {
   display: flex;
   flex-wrap: wrap;
@@ -755,7 +812,6 @@ footer .credit a {
   gap: 3rem;
   margin-top: 3rem;
 }
-
 .features .feature-card {
   text-align: center;
   background: #111;
@@ -764,14 +820,7 @@ footer .credit a {
   flex: 1 1 25rem;
   max-width: 30rem;
   border-radius: 0.5rem;
-  transition: 0.3s;
 }
-
-.features .feature-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-5px);
-}
-
 .features .feature-icon {
   color: var(--primary);
   width: 4rem;
@@ -779,23 +828,10 @@ footer .credit a {
   margin-bottom: 1.5rem;
 }
 
-.features h3 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-}
-
-.features p {
-  font-size: 1.2rem;
-  color: #ccc;
-  line-height: 1.6;
-}
-
-/* 2. Styling Section Testimonials */
+/* 5. ANIMASI: Section Testimonials */
 .testimonials {
   padding: 8rem 7% 1.4rem;
-  background-color: var(--bg);
 }
-
 .testimonials .row {
   display: flex;
   flex-wrap: wrap;
@@ -803,7 +839,6 @@ footer .credit a {
   gap: 2.5rem;
   margin-top: 3rem;
 }
-
 .testimonials .testimonial-card {
   background: #161616;
   padding: 2.5rem;
@@ -812,13 +847,7 @@ footer .credit a {
   text-align: center;
   flex: 1 1 28rem;
   max-width: 35rem;
-  transition: 0.3s;
 }
-
-.testimonials .testimonial-card:hover {
-  border-color: var(--primary);
-}
-
 .testimonials .testimonial-card img {
   width: 8rem;
   height: 8rem;
@@ -827,46 +856,134 @@ footer .credit a {
   margin-bottom: 1.5rem;
   border: 2px solid var(--primary);
 }
-
-.testimonials h3 {
-  font-size: 1.6rem;
-  margin-bottom: 0.5rem;
-}
-
 .testimonials .comment {
-  font-size: 1.2rem;
-  color: #ddd;
   font-style: italic;
-  line-height: 1.6;
 }
 
-/* 3. Styling Section Gallery */
+/* 6. ANIMASI: Section Gallery */
 .gallery {
   padding: 8rem 7% 1.4rem;
   background-color: #0b0b0b;
 }
-
+body.light-theme .gallery {
+  background-color: #e5e5e7;
+}
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   gap: 2rem;
   margin-top: 3rem;
 }
-
 .gallery-item {
   overflow: hidden;
   border-radius: 0.5rem;
   border: 1px solid #333;
   height: 22rem;
 }
-
 .gallery-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: 0.4s ease;
+  transition: transform 0.4s ease;
+}
+.gallery-item:hover img {
+  transform: scale(1.1);
 }
 
-.gallery-item:hover img {
+/* 7. INTERAKSI: Section Counter Animation Style */
+.counter-section {
+  padding: 4rem 7%;
+  background-color: #0b0b0b;
+  border-top: 1px solid #252525;
+  border-bottom: 1px solid #252525;
+}
+body.light-theme .counter-section {
+  background-color: #e5e5e7;
+  border-color: #d2d2d7;
+}
+.counter-wrapper {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2rem;
+  text-align: center;
+}
+.counter-box h3 {
+  font-size: 3.5rem;
+  color: var(--primary);
+}
+.counter-box p {
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+/* 8. INTERAKSI: FAQ Accordion Style */
+.faq {
+  padding: 8rem 7% 1.4rem;
+}
+.faq-container {
+  max-width: 80rem;
+  margin: 3rem auto 0;
+}
+.faq-item {
+  border-bottom: 1px solid #333;
+  padding: 1rem 0;
+}
+body.light-theme .faq-item {
+  border-bottom-color: #d2d2d7;
+}
+.faq-question {
+  width: 100%;
+  background: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: inherit;
+  padding: 1.5rem 0;
+  cursor: pointer;
+}
+.faq-question i {
+  transition: transform 0.3s;
+}
+.faq-question.active i {
+  transform: rotate(180deg);
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+.faq-answer p {
+  padding: 1rem 0 2rem;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  text-align: left !important;
+  color: #ccc;
+}
+body.light-theme .faq-answer p {
+  color: #555;
+}
+
+/* 9. INTERAKSI: Tombol Back to Top Style */
+#backToTop {
+  display: none;
+  position: fixed;
+  bottom: 3rem;
+  right: 3rem;
+  z-index: 99;
+  background-color: var(--primary);
+  color: white;
+  cursor: pointer;
+  padding: 1.2rem;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: background-color 0.3s, transform 0.3s;
+}
+#backToTop:hover {
+  background-color: #fff;
+  color: var(--bg);
   transform: scale(1.1);
 }

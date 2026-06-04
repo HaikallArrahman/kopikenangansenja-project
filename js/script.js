@@ -95,44 +95,123 @@ if (menuRow && menuSection) {
 // KODE TAMBAHAN BARU (UNTUK PENAMBAHAN FITUR TANPA MENGUBAH KODE DI ATAS)
 // ==========================================================================
 
-// 1. Fitur Validasi dan Notifikasi Formulir Kontak
+// 1. INISIALISASI: AOS Animation
+AOS.init({
+  once: true, 
+  offset: 120,
+});
+
+// 2. INTERAKSI: Logika Switch Dark Mode & Light Mode
+const darkModeBtn = document.querySelector('#dark-mode-button');
+if (darkModeBtn) {
+  darkModeBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.body.classList.toggle('light-theme');
+    
+    // Ganti Ikon Dinamis saat Diklik
+    const icon = darkModeBtn.querySelector('i');
+    if (document.body.classList.contains('light-theme')) {
+      icon.setAttribute('data-feather', 'sun');
+    } else {
+      icon.setAttribute('data-feather', 'moon');
+    }
+    feather.replace();
+  });
+}
+
+// 3. INTERAKSI: Logika FAQ Accordion
+const faqQuestions = document.querySelectorAll('.faq-question');
+faqQuestions.forEach(question => {
+  question.addEventListener('click', function() {
+    this.classList.toggle('active');
+    const answer = this.nextElementSibling;
+    if (answer.style.maxHeight) {
+      answer.style.maxHeight = null;
+    } else {
+      answer.style.maxHeight = answer.scrollHeight + "px";
+    }
+  });
+});
+
+// 4. INTERAKSI: Logika Tombol Back to Top
+const backToTopBtn = document.querySelector('#backToTop');
+window.onscroll = function() {
+  scrollFunction();
+};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+    backToTopBtn.style.display = "block";
+  } else {
+    backToTopBtn.style.display = "none";
+  }
+}
+
+backToTopBtn.addEventListener('click', function() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+// 5. INTERAKSI: Logika Counter Animation (Statistik Dinamis)
+const counters = document.querySelectorAll('.counter-number');
+const speed = 200;
+
+const startCounters = () => {
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText;
+      const inc = target / speed;
+
+      if (count < target) {
+        counter.innerText = Math.ceil(count + inc);
+        setTimeout(updateCount, 1);
+      } else {
+        counter.innerText = target + "+";
+      }
+    };
+    updateCount();
+  });
+};
+
+// Memicu Counter hanya saat Section terlihat dilayar
+const counterSectionObserver = document.querySelector('#counter');
+if (counterSectionObserver) {
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        startCounters();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  observer.observe(counterSectionObserver);
+}
+
+// 6. Penanganan Form Kontak & Shopping Cart lama
 const contactForm = document.querySelector('.contact form');
 if (contactForm) {
   contactForm.addEventListener('submit', function (e) {
     e.preventDefault();
-
     const nameInput = contactForm.querySelector('input[placeholder="nama"]');
-    const emailInput = contactForm.querySelector('input[placeholder="email"]');
-    const phoneInput = contactForm.querySelector('input[placeholder="no hp"]');
-
-    if (!nameInput.value.trim() || !emailInput.value.trim() || !phoneInput.value.trim()) {
-      alert('Mohon lengkapi semua data formulir kontak sebelum mengirim pesan!');
+    if (!nameInput.value.trim()) {
+      alert('Mohon lengkapi data!');
       return;
     }
-
-    alert(`Terima kasih, ${nameInput.value}! Pesan Anda berhasil dikirim.`);
+    alert(`Terima kasih, ${nameInput.value}! Pesan Anda dikirim.`);
     contactForm.reset();
   });
 }
 
-// 2. Fitur Interaktif Menghapus Item dari Shopping Cart
 const cartItemsContainer = document.querySelector('.shopping-cart');
 if (cartItemsContainer) {
   cartItemsContainer.addEventListener('click', function (e) {
     if (e.target.classList.contains('remove-item') || e.target.closest('.remove-item')) {
       const cartItem = e.target.closest('.cart-item');
       if (cartItem) {
-        cartItem.style.transition = 'all 0.3s ease';
-        cartItem.style.opacity = '0';
-        cartItem.style.transform = 'scale(0.9)';
-        
-        setTimeout(() => {
-          cartItem.remove();
-          const remainingItems = cartItemsContainer.querySelectorAll('.cart-item');
-          if (remainingItems.length === 0) {
-            cartItemsContainer.innerHTML = '<p style="padding: 2rem; text-align: center; font-size: 1.4rem;">Keranjang belanja Anda kosong.</p>';
-          }
-        }, 300);
+        cartItem.remove();
       }
     }
   });
