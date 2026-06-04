@@ -90,3 +90,50 @@ if (menuRow && menuSection) {
     }
   });
 }
+
+// ==========================================================================
+// KODE TAMBAHAN BARU (UNTUK PENAMBAHAN FITUR TANPA MENGUBAH KODE DI ATAS)
+// ==========================================================================
+
+// 1. Fitur Validasi dan Notifikasi Formulir Kontak
+const contactForm = document.querySelector('.contact form');
+if (contactForm) {
+  contactForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const nameInput = contactForm.querySelector('input[placeholder="nama"]');
+    const emailInput = contactForm.querySelector('input[placeholder="email"]');
+    const phoneInput = contactForm.querySelector('input[placeholder="no hp"]');
+
+    if (!nameInput.value.trim() || !emailInput.value.trim() || !phoneInput.value.trim()) {
+      alert('Mohon lengkapi semua data formulir kontak sebelum mengirim pesan!');
+      return;
+    }
+
+    alert(`Terima kasih, ${nameInput.value}! Pesan Anda berhasil dikirim.`);
+    contactForm.reset();
+  });
+}
+
+// 2. Fitur Interaktif Menghapus Item dari Shopping Cart
+const cartItemsContainer = document.querySelector('.shopping-cart');
+if (cartItemsContainer) {
+  cartItemsContainer.addEventListener('click', function (e) {
+    if (e.target.classList.contains('remove-item') || e.target.closest('.remove-item')) {
+      const cartItem = e.target.closest('.cart-item');
+      if (cartItem) {
+        cartItem.style.transition = 'all 0.3s ease';
+        cartItem.style.opacity = '0';
+        cartItem.style.transform = 'scale(0.9)';
+        
+        setTimeout(() => {
+          cartItem.remove();
+          const remainingItems = cartItemsContainer.querySelectorAll('.cart-item');
+          if (remainingItems.length === 0) {
+            cartItemsContainer.innerHTML = '<p style="padding: 2rem; text-align: center; font-size: 1.4rem;">Keranjang belanja Anda kosong.</p>';
+          }
+        }, 300);
+      }
+    }
+  });
+}
