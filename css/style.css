@@ -274,6 +274,10 @@ body {
   -webkit-mask-size: 50%;
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
+  mask-image: url('../img/menu/splash.svg');
+  mask-size: 50%;
+  mask-repeat: no-repeat;
+  mask-position: center;
 }
 
 .about .row .content {
@@ -294,12 +298,12 @@ body {
 }
 
 /* Menu Section */
-/* Menu Section */
 .menu h2,
 .products h2,
 .contact h2 {
   margin-bottom: 1rem;
 }
+
 .menu p,
 .products p,
 .contact p {
@@ -312,17 +316,31 @@ body {
 
 .menu .row {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;         
+  overflow-x: auto;         
+  scroll-behavior: smooth;    
   margin-top: 5rem;
-  justify-content: center;
-  gap: 1.5rem; /* Menambahkan jarak antar menu card */
+  padding: 1rem 2rem 3rem;  
+  gap: 2.5rem;         
+  justify-content: flex-start;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.menu .row::-webkit-scrollbar {
+  display: none;         
+}
+
+.menu .row {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;    
 }
 
 .menu .row .menu-card {
   text-align: center;
-  padding-bottom: 4rem;
-  flex: 1 1 20rem; /* Mengatur basis ukuran agar kartu mau turun ke bawah (wrap) */
-  max-width: 25rem; /* Membatasi lebar maksimal kartu menu */
+  flex: 0 0 22rem;  
+  max-width: 25rem;
+  scroll-snap-align: center; 
 }
 
 .menu .row .menu-card img {
@@ -334,6 +352,59 @@ body {
 
 .menu .row .menu-card .menu-card-title {
   margin: 1rem auto 0.5rem;
+}
+
+.menu {
+  position: relative;
+}
+
+.menu::before,
+.menu::after {
+  content: '';
+  position: absolute;
+  top: 60%;              
+  transform: translateY(-50%);
+  width: 45px;
+  height: 45px;
+  background-color: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: 0.2s ease-in-out;
+  pointer-events: none;       
+  opacity: 0.7;
+}
+
+.menu::before {
+  content: '‹';             
+  left: 3%;
+}
+
+/* Tombol Kanan */
+.menu::after {
+  content: '›';                
+  right: 3%;
+}
+
+.menu:hover::before,
+.menu:hover::after {
+  opacity: 1;
+  background-color: #fff;
+  color: var(--bg);
+}
+
+@media (max-width: 450px) {
+  .menu::before,
+  .menu::after {
+    display: none;
+  }
 }
 
 /* Products Section */

@@ -64,3 +64,29 @@ window.onclick = (e) => {
     itemDetailModal.style.display = 'none';
   }
 };
+
+const menuRow = document.querySelector('.menu .row');
+const menuSection = document.querySelector('.menu');
+
+if (menuRow && menuSection) {
+  const scrollAmount = 250; 
+
+  menuSection.addEventListener('click', function (e) {
+    const rect = menuSection.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+
+    if (clickX < rect.width * 0.08) {
+      menuRow.scrollBy({
+        left: -scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+
+    else if (clickX > rect.width * 0.92) {
+      menuRow.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  });
+}
