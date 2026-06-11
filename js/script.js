@@ -191,19 +191,19 @@ if (counterSectionObserver) {
 }
 
 // 6. Penanganan Form Kontak & Shopping Cart lama
-const contactForm = document.querySelector('.contact form');
-if (contactForm) {
-  contactForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const nameInput = contactForm.querySelector('input[placeholder="nama"]');
-    if (!nameInput.value.trim()) {
-      alert('Mohon lengkapi data!');
-      return;
-    }
-    alert(`Terima kasih, ${nameInput.value}! Pesan Anda dikirim.`);
-    contactForm.reset();
-  });
-}
+// const contactForm = document.querySelector('.contact form');
+// if (contactForm) {
+//   contactForm.addEventListener('submit', function (e) {
+//     e.preventDefault();
+//     const nameInput = contactForm.querySelector('input[placeholder="nama"]');
+//     if (!nameInput.value.trim()) {
+//       alert('Mohon lengkapi data!');
+//       return;
+//     }
+//     alert(`Terima kasih, ${nameInput.value}! Pesan Anda dikirim.`);
+//     contactForm.reset();
+//   });
+// }
 
 const cartItemsContainer = document.querySelector('.shopping-cart');
 if (cartItemsContainer) {
